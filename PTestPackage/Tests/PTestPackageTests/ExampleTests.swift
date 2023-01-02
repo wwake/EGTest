@@ -16,11 +16,11 @@ class Demo {
 
 final class ExampleTests: XCTestCase {
   func testStringOfSum() {
-    Check.checkTestCases(
+    Check.examples(
     [
-      Example(input: (-1, 1), output: "0", "zero"),
-      Example(input: (3, 0), output: "3", "one-digit"),
-      Example(input: (-2, 1), output: "-1", "negative")
+      EG(input: (-1, 1), output: "0", "zero"),
+      EG(input: (3, 0), output: "3", "one-digit"),
+      EG(input: (-2, 1), output: "-1", "negative")
     ]) { p in
       let my = Demo()
       let actual = my.stringOfSum(p.input.0, p.input.1)
