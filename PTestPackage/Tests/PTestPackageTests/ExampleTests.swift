@@ -16,7 +16,7 @@ class Demo {
 
 final class ExampleTests: XCTestCase {
   func testStringOfSum() {
-    checkTestCases(
+    Check.checkTestCases(
     [
       Example(input: (-1, 1), output: "0", "zero"),
       Example(input: (3, 0), output: "3", "one-digit"),

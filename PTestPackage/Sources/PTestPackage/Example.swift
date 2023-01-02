@@ -26,9 +26,11 @@ struct Example<Input, Output> {
   }
 }
 
-func checkTestCases<Input, Output>(
-  _ tests: [Example<Input, Output>],
-  _ parameterizedAssert: (Example<Input, Output>) -> ())
-{
-  tests.forEach { parameterizedAssert($0) }
+struct Check {
+  static func checkTestCases<Input, Output>(
+    _ tests: [Example<Input, Output>],
+    _ parameterizedAssert: (Example<Input, Output>) -> ())
+  {
+    tests.forEach { parameterizedAssert($0) }
+  }
 }
