@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Example<Input, Output> {
+struct EG<Input, Output> {
   var input: Input
   var output : Output
   var message: String
@@ -27,9 +27,9 @@ struct Example<Input, Output> {
 }
 
 struct Check {
-  static func checkTestCases<Input, Output>(
-    _ tests: [Example<Input, Output>],
-    _ parameterizedAssert: (Example<Input, Output>) -> ())
+  static func examples<Input, Output>(
+    _ tests: [EG<Input, Output>],
+    _ parameterizedAssert: (EG<Input, Output>) -> ())
   {
     tests.forEach { parameterizedAssert($0) }
   }
