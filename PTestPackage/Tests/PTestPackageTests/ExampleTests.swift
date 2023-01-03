@@ -29,11 +29,11 @@ final class ExampleTests: XCTestCase {
   }
   
   func testStringOfSum2() {
-    Examples({
+    Examples {
       EG(input: (-1, 1), output: "0", "zero")
       EG(input: (3, 0), output: "3", "one-digit")
       EG(input: (-2, 1), output: "-1", "negative")
-    }) { (p: EG<(Int,Int), String>) in
+    }.check { p in
       let my = Demo()
       let actual = my.stringOfSum(p.input.0, p.input.1)
       XCTAssertEqual(p.output, actual, p.msg())

@@ -40,7 +40,7 @@ struct Test<Input, Output> {
   let examples: [EG<Input, Output>]
 }
 
-@resultBuilder struct Check2<Input, Output> {
+@resultBuilder struct ExampleBuilder<Input, Output> {
   
   static public func buildBlock( 
     _ components: EG<Input, Output>... 
@@ -78,8 +78,22 @@ typealias Assert<Input,Output> = (EG<Input,Output>) -> ()
 //  
 //}
 
-func Examples<Input,Output>(@Check2<Input,Output> _ content: () -> [EG<Input, Output>], _ assert: Assert<Input,Output>) -> () {
-  Check.examples(content(), assert)
+//struct Examples<Input,Output> { 
+//  public init(@ExampleBuilder<Input,Output> _ content: () -> [EG<Input, Output>], _ assert: Assert<Input,Output>) {
+//Check.examples(content(), assert)
+//  }
+//}
+
+public struct Examples<Input, Output> {
+  let examples: [EG<Input, Output>]
+  
+  init(@ExampleBuilder<Input, Output> _ content: () -> [EG<Input, Output>]) {
+    examples = content()
+  }
+  
+  func check(_ assert: Assert<Input,Output>) {
+    Check.examples(examples, assert)
+  }
 }
 
 
