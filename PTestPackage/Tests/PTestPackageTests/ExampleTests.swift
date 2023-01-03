@@ -53,4 +53,15 @@ final class ExampleTests: XCTestCase {
       $0 == "7"
     }
   }
+  
+  func testAAA() {
+    _ = Testing {
+      Arrange { Demo() }
+      
+      Act<Demo, String> { $0.stringOfSum(3, 4) }
+      
+      Assert { actual in 
+        actual == "7" }
+    }
+  }
 }

@@ -103,39 +103,82 @@ public struct Arrange2<Subject> {
 }
 
 public func Act2<Subject, Actual> (
-    _ arrange: Arrange2<Subject>, 
-    _ act: @escaping (Subject) -> Actual) -> Actual {
-  act(arrange.subject)
-}
+  _ arrange: Arrange2<Subject>, 
+  _ act: @escaping (Subject) -> Actual) -> Actual {
+    act(arrange.subject)
+  }
 
-
-@resultBuilder struct AssertBuilder {
-  
-  static public func buildBlock( 
-    _ components: Predicate... 
-  ) -> [Predicate] {
-    Array(components)
-  }
-  
-  static public func buildExpression(_ element: Bool) -> Predicate {
-    Predicate(element, #line)
-  }
-  
-  static public func buildFinalResult(_ component: [Predicate]) -> ()  {
-    XCTAssertTrue( component.allSatisfy {$0.predicate}
-    )  
-  }
-}
 
 public func Assert2<Actual>(
   _ actual: Actual, 
   _ assertClosure: (Actual) -> (Bool)) {
-  XCTAssertTrue( 
-    assertClosure(actual)
-  )
-}
+    XCTAssertTrue( 
+      assertClosure(actual)
+    )
+  }
 
 
-func Checking<Input,Output>(@Check3<Input,Output>  content: @escaping AssertMethod<Input,Output>) -> (AssertMethod<Input, Output>) {
+func Checking<Input,Output>(@Check3<Input,Output> content: @escaping AssertMethod<Input,Output>) -> (AssertMethod<Input, Output>) {
   return content
 }
+
+protocol Marker {}
+
+public struct Arrange<Subject> : Marker {
+  let subject: Subject
+  
+  init (_ setup: () -> Subject ) {
+    subject = setup()
+  }
+}
+
+public struct Act<Subject, Actual> : Marker {
+  let act: (Subject) -> Actual
+  
+  init(
+    _ act: @escaping (Subject) -> Actual) {
+      self.act = act
+    }
+}
+
+public struct Assert<Actual> : Marker {
+  let file: StaticString
+  let line: UInt
+  let assert: (Actual) -> Bool
+  
+  init(_ file: StaticString = #file, _ line: UInt = #line, _ assert: @escaping (Actual) -> Bool) {
+    self.file = file
+    self.line = line
+    self.assert = assert
+  }
+  
+}
+
+public struct Testing<Subject, Actual> {
+  init(@TestBuilder<Subject, Actual> _ component: () -> () ) {
+    component()
+  }
+}
+
+@resultBuilder struct TestBuilder<Subject, Actual> {
+  
+  static public func buildBlock( 
+    _ arrange: Arrange<Subject>,
+    _ act: Act<Subject, Actual>,
+    _ assert: Assert<Actual>
+  ) -> () {
+    
+    let subject = arrange.subject
+    let actual = act.act(subject)
+    XCTAssertTrue(
+      assert.assert(actual),
+      "Assert failed",
+      file: assert.file,
+      line: assert.line
+    )
+  }
+  
+  static public func buildFinalResult(_ component: ()) -> () {
+    }
+}
+
