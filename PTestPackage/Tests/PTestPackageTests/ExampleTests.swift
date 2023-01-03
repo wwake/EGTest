@@ -40,16 +40,16 @@ final class ExampleTests: XCTestCase {
     }
   }
   
-  func testAAA() {
-    let subject = Arrange {
+  func testAAA_original() {
+    let subject = Arrange2 {
       Demo()
     }
     
-    let actual = Act(subject) {
+    let actual = Act2(subject) {
       $0.stringOfSum(3, 4)
     }
     
-    Assert(actual) {
+    Assert2(actual) {
       $0 == "7"
     }
   }

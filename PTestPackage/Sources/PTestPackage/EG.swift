@@ -94,7 +94,7 @@ public struct Predicate {
 
 
 
-public struct Arrange<Subject> {
+public struct Arrange2<Subject> {
   let subject: Subject
   
   init (_ setup: () -> Subject ) {
@@ -102,8 +102,8 @@ public struct Arrange<Subject> {
   }
 }
 
-public func Act<Subject, Actual> (
-    _ arrange: Arrange<Subject>, 
+public func Act2<Subject, Actual> (
+    _ arrange: Arrange2<Subject>, 
     _ act: @escaping (Subject) -> Actual) -> Actual {
   act(arrange.subject)
 }
@@ -127,7 +127,7 @@ public func Act<Subject, Actual> (
   }
 }
 
-public func Assert<Actual>(
+public func Assert2<Actual>(
   _ actual: Actual, 
   _ assertClosure: (Actual) -> (Bool)) {
   XCTAssertTrue( 
