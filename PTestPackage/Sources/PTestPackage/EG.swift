@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import XCTest
 
 struct EG<Input, Output> {
   var input: Input
@@ -48,41 +49,23 @@ struct Test<Input, Output> {
     Array(components)
   }
   
-//  static public func buildExpression(_ expression: EG<Input, Output>) -> 
-//  EG<Input, Output> {
-//    expression
-//  }
+  //  static public func buildExpression(_ expression: EG<Input, Output>) -> 
+  //  EG<Input, Output> {
+  //    expression
+  //  }
 }
 
 @resultBuilder struct Check3<Input, Output> {
   
   static public func buildBlock( 
-    _ component: @escaping Assert<Input,Output>) 
-  -> Assert<Input,Output> {
+    _ component: @escaping AssertMethod<Input,Output>) 
+  -> AssertMethod<Input,Output> {
     return component
   }
-  
-//  static public func buildExpression(_ expression: @escaping Assert<Input,Output>) -> 
-//  Assert<Input, Output> {
-//    expression
-//  }
 }
 
-typealias Assert<Input,Output> = (EG<Input,Output>) -> ()
+typealias AssertMethod<Input,Output> = (EG<Input,Output>) -> ()
 
-//func myAsserter2<Input, Output>(_ assert: Assert<Input,Output>) {
-//  
-//}
-//
-//func myAsserter<Input, Output>(examples: [EG<Input, Output>]) -> ((Assert<Input,Output>) -> ()) {
-//  
-//}
-
-//struct Examples<Input,Output> { 
-//  public init(@ExampleBuilder<Input,Output> _ content: () -> [EG<Input, Output>], _ assert: Assert<Input,Output>) {
-//Check.examples(content(), assert)
-//  }
-//}
 
 public struct Examples<Input, Output> {
   let examples: [EG<Input, Output>]
@@ -91,12 +74,68 @@ public struct Examples<Input, Output> {
     examples = content()
   }
   
-  func check(_ assert: Assert<Input,Output>) {
+  func check(_ assert: AssertMethod<Input,Output>) {
     Check.examples(examples, assert)
   }
 }
 
 
-func Checking<Input,Output>(@Check3<Input,Output>  content: @escaping Assert<Input,Output>) -> (Assert<Input, Output>) {
+
+public struct Predicate {
+  let predicate: Bool
+  let line: Int
+  
+  init(_ predicate: Bool, _ line: Int = 0) {
+    self.predicate = predicate
+    self.line = line
+  }
+}
+
+
+
+
+public struct Arrange<Subject> {
+  let subject: Subject
+  
+  init (_ setup: () -> Subject ) {
+    subject = setup()
+  }
+}
+
+public func Act<Subject, Actual> (
+    _ arrange: Arrange<Subject>, 
+    _ act: @escaping (Subject) -> Actual) -> Actual {
+  act(arrange.subject)
+}
+
+
+@resultBuilder struct AssertBuilder {
+  
+  static public func buildBlock( 
+    _ components: Predicate... 
+  ) -> [Predicate] {
+    Array(components)
+  }
+  
+  static public func buildExpression(_ element: Bool) -> Predicate {
+    Predicate(element, #line)
+  }
+  
+  static public func buildFinalResult(_ component: [Predicate]) -> ()  {
+    XCTAssertTrue( component.allSatisfy {$0.predicate}
+    )  
+  }
+}
+
+public func Assert<Actual>(
+  _ actual: Actual, 
+  _ assertClosure: (Actual) -> (Bool)) {
+  XCTAssertTrue( 
+    assertClosure(actual)
+  )
+}
+
+
+func Checking<Input,Output>(@Check3<Input,Output>  content: @escaping AssertMethod<Input,Output>) -> (AssertMethod<Input, Output>) {
   return content
 }

@@ -40,16 +40,17 @@ final class ExampleTests: XCTestCase {
     }
   }
   
-//  func testAAA() {
-//    let subject = Arrange {
-//      
-//    }
-//    
-//    let actual = Act { ... }
-//    
-//    Assert {
-//      actual.count == 1    
-  //    actual[0] == "X"
-//    }
-//  }
+  func testAAA() {
+    let subject = Arrange {
+      Demo()
+    }
+    
+    let actual = Act(subject) {
+      $0.stringOfSum(3, 4)
+    }
+    
+    Assert(actual) {
+      $0 == "7"
+    }
+  }
 }
