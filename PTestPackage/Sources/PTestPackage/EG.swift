@@ -8,7 +8,7 @@
 import Foundation
 import XCTest
 
-struct EG<Input, Output> {
+struct eg<Input, Output> {
   var input: Input
   var output : Output
   var message: String
@@ -29,23 +29,23 @@ struct EG<Input, Output> {
 
 struct Check {
   static func examples<Input, Output>(
-    _ tests: [EG<Input, Output>],
-    _ parameterizedAssert: (EG<Input, Output>) -> ())
+    _ tests: [eg<Input, Output>],
+    _ parameterizedAssert: (eg<Input, Output>) -> ())
   {
     tests.forEach { parameterizedAssert($0) }
   }
 }
 
 struct Test<Input, Output> {
-  let assert: ((EG<Input, Output>) -> ())
-  let examples: [EG<Input, Output>]
+  let assert: ((eg<Input, Output>) -> ())
+  let examples: [eg<Input, Output>]
 }
 
 @resultBuilder struct ExampleBuilder<Input, Output> {
   
   static public func buildBlock( 
-    _ components: EG<Input, Output>... 
-  ) -> [EG<Input,Output>] {
+    _ components: eg<Input, Output>... 
+  ) -> [eg<Input,Output>] {
     Array(components)
   }
   
@@ -64,13 +64,13 @@ struct Test<Input, Output> {
   }
 }
 
-typealias AssertMethod<Input,Output> = (EG<Input,Output>) -> ()
+typealias AssertMethod<Input,Output> = (eg<Input,Output>) -> ()
 
 
 public struct Examples<Input, Output> {
-  let examples: [EG<Input, Output>]
+  let examples: [eg<Input, Output>]
   
-  init(@ExampleBuilder<Input, Output> _ content: () -> [EG<Input, Output>]) {
+  init(@ExampleBuilder<Input, Output> _ content: () -> [eg<Input, Output>]) {
     examples = content()
   }
   
@@ -152,6 +152,16 @@ public struct Assert<Actual> : Marker {
     self.assert = assert
   }
   
+}
+
+public protocol AAA {  
+  func Testing<Subject, Actual>(@TestBuilder<Subject, Actual> _ content: () -> (Arrange<Subject>, Act<Subject, Actual>, Assert<Actual>)) 
+}
+
+extension XCTestCase : AAA {
+  public func Testing<Subject, Actual>(_ content: () -> (Arrange<Subject>, Act<Subject, Actual>, Assert<Actual>)) {
+    
+  }
 }
 
 public struct Testing<Subject, Actual> {
