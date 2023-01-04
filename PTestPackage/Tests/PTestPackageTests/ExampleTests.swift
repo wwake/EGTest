@@ -28,4 +28,16 @@ final class ExampleTests: XCTestCase {
       }
   }
   
+  
+  func checkCommutative<T: Equatable>(_ a: T, _ b: T, _ op: (T, T) -> T, _ file: StaticString = #file, _ line : UInt = #line) {
+    XCTAssertEqual(op(a,b), op(b,a), "operation does not commute for \(a) and \(b)", file: file, line: line)
+  }
+  
+  func testCommutativePlus() {
+    let a = 3
+    let b = 4
+    
+    checkCommutative(a, b, +)
+  }
+  
 }
