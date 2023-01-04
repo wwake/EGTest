@@ -1,3 +1,9 @@
+Clean up and consolidate
+Make Arrange2 like Act and Assert2, evaluating as it goes
+Added eq() to the TestCase extension so we can use it directly
+Added an eq() method to get a better message
+Added #line and #file for better reporting
+
 Rename EG => eg
 
 Week of Jan 2, 2023
