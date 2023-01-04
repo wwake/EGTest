@@ -1,4 +1,4 @@
-
 Rename EG => eg
 
+Week of Jan 2, 2023
 AAA with type inference

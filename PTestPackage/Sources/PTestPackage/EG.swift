@@ -111,12 +111,22 @@ public func Act2<Subject, Actual> (
 
 public func Assert2<Actual>(
   _ actual: Actual, 
-  _ assertClosure: (Actual) -> (Bool)) {
+  _ assertClosure: (Actual) -> (Bool),
+  _ file : StaticString = #file,
+  _ line : UInt = #line) {
     XCTAssertTrue( 
-      assertClosure(actual)
+      assertClosure(actual), 
+      "", 
+      file: file, 
+      line: line
     )
   }
 
+func eq<T: Equatable>(_ a: T, _ b: T, _ file : StaticString = #file, _ line: UInt = #line) -> Bool {
+  if a == b { return true }
+  XCTAssertEqual(a, b, "", file: file, line: line)
+  return false
+}
 
 func Checking<Input,Output>(@Check3<Input,Output> content: @escaping AssertMethod<Input,Output>) -> (AssertMethod<Input, Output>) {
   return content

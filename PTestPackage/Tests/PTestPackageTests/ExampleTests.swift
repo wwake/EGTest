@@ -50,7 +50,8 @@ final class ExampleTests: XCTestCase {
     }
     
     Assert2(actual) {
-      $0 == "7"
+      eq($0, "7") 
+      && $0 > "1"
     }
   }
   
