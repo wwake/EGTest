@@ -36,11 +36,6 @@ struct Check {
   }
 }
 
-typealias AssertMethod<Input,Output> = (eg<Input,Output>) -> ()
-
-
-
-
 extension XCTestCase {  
   func eq<T: Equatable>(_ a: T, _ b: T, _ message : String = "", _ file : StaticString = #file, _ line: UInt = #line) -> Bool {
     if a == b { return true }
