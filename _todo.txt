@@ -1,6 +1,5 @@
-* Make AllPairs versions of all laws
-* Test-drive real versions of this
 * CheckProperty for various properties
+* Make AllPairs versions of all laws
 * Figure out best argument order
 * Keep eq() ?
 
@@ -28,4 +27,7 @@ Symmetric Law
 Equivalence Partition
 
 * Clean up parameterized tests package
+
+* Test-drive real versions of property tests
+
 

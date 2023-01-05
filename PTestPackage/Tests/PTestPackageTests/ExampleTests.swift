@@ -34,13 +34,13 @@ final class ExampleTests: XCTestCase {
   }
   
   
-  func testCheckPropertySucceeds() {
-    checkProperty(3,4,+,.commutative)
+  func testCheckCommutativeSucceeds() {
+    checkProperty(.commutative, +, 3,4)
   }
   
-  func testCheckPropertyFails() {
+  func testCheckCommutativeFails() {
     XCTExpectFailure("commutative -")
-    checkProperty(3,4,-,.commutative)
+    checkProperty(.commutative, -, 3,4)
   }
   
   let ints = [-4, -1, 0, 1, 99]
@@ -77,15 +77,9 @@ final class ExampleTests: XCTestCase {
     XCTExpectFailure("symmetric <= should fail")
     checkProperty(3,4,<=,.symmetric)
   }
-  
-  func checkTransitive<T>(_ a: T, _ b: T, _ c : T, _ op: (T,T) -> Bool, _ name: String = "") {
-    if (op(a,b) && op(b,c) && op(a,c)) { return }
-    XCTFail("Operator is not transitive for values \(a), \(b), and \(c)")
-  }
-  
+    
   func testTransitiveSucceeds() {
     checkProperty(3,4,5,<, .transitive)
-    checkTransitive(3, 4, 5, <)
   }
   
   func testTransitiveFails() {
