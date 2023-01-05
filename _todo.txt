@@ -1,3 +1,4 @@
+* Clean up parameterized tests package
 * Make AllPairs versions of all laws
 * Test-drive real versions of this
 * Figure out best argument order

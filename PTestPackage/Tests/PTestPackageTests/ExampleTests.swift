@@ -29,7 +29,7 @@ final class ExampleTests: XCTestCase {
   }
   
   func testParameterizedTestWithEmptyList() {
-    let empty: [eg<Int,String>] = []
+    let empty: [EG<Int,String>] = []
     check(empty) { _ in XCTFail("any test fails") }
   }
   

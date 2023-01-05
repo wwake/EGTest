@@ -8,7 +8,7 @@
 import Foundation
 import XCTest
 
-struct eg<Input, Output> {
+struct EG<Input, Output> {
   var input: Input
   var output : Output
   var message: String
@@ -29,10 +29,19 @@ struct eg<Input, Output> {
 
 extension XCTestCase {
   func check<Input, Output>(
-    _ tests: [eg<Input, Output>],
-    _ parameterizedAssert: (eg<Input, Output>) -> ())
+    _ tests: [EG<Input, Output>],
+    _ parameterizedAssert: (EG<Input, Output>) -> ())
   {
     tests.forEach { parameterizedAssert($0) }
+  }
+  
+  func eg<Input, Output>(
+    input: Input, 
+    output: Output,
+    _ message: String = "", 
+    _ line: Int = #line) 
+      -> EG<Input, Output> {
+    EG(input: input, output: output, message, line)
   }
 }
 
