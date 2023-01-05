@@ -34,18 +34,6 @@ final class ExampleTests: XCTestCase {
   }
   
   
-  
-  
-
-  func testCommutativePlusSucceeds() {
-    checkCommutative(3, 4, +)
-  }
-  
-  func testCommutativeMinusFails() {
-    XCTExpectFailure("commutative -")
-    checkCommutative(3, 4, -)
-  }
-  
   let ints = [-4, -1, 0, 1, 99]
   
   func testCombinatorialCommutativeSucceeds() {

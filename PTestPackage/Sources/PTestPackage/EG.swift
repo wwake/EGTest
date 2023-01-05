@@ -73,18 +73,11 @@ public extension XCTestCase {
 
     XCTAssertEqual(op(a,b), op(b,a), "property '\(property)' does not hold for \(a) and \(b)", file: file, line: line)
   }
-
-  func checkCommutative<T: Equatable>(_ a: T, _ b: T, file: StaticString = #file, line : UInt = #line, _ op: (T, T) -> T) 
-  {
-    if commutes(a,b,op) { return }
-    
-    XCTAssertEqual(op(a,b), op(b,a), "operation is not commutative for \(a) and \(b)", file: file, line: line)
-  }
   
-  func checkCommutative<T: Equatable>(_ values: [T], file: StaticString = #file, line : UInt = #line, _ op: (T, T) -> T) 
+  func checkCommutative<T: Equatable>(_ values: [T], file: StaticString = #file, line : UInt = #line, _ op: @escaping (T, T) -> T) 
   {
     allPairs(values) { 
-      checkCommutative($0, $1, file:file, line: line, op)
+      checkProperty($0, $1, op, .commutative)
     }
   }
 
