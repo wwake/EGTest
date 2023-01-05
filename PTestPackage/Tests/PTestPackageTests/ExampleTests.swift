@@ -34,21 +34,6 @@ final class ExampleTests: XCTestCase {
   }
   
   
-  let ints = [-4, -1, 0, 1, 99]
-  
-  func testCombinatorialCommutativeSucceeds() {
-    checkCommutative(ints, +)
-  }
-  
-  func testCombinatorialCommutativeDetectsFailure() {
-    XCTExpectFailure("commutative -: two bad values")
-    checkCommutative(ints) { 
-      if $0 == 0 && $1 == 99 { return 100 }
-      if $0 == 99 && $1 == 0 { return -1}
-      return $0 + $1
-    }
-  }
-  
   func testCheckPropertySucceeds() {
     checkProperty(3,4,+,.commutative)
   }
@@ -58,6 +43,23 @@ final class ExampleTests: XCTestCase {
     checkProperty(3,4,-,.commutative)
   }
   
+  let ints = [-4, -1, 0, 1, 99]
+  
+  func testCombinatorialCommutativeSucceeds() {
+    checkProperty(ints, +, .commutative)
+  }
+  
+  func testCombinatorialCommutativeDetectsFailure() {
+    XCTExpectFailure("commutative -: two bad values")
+    let commutativeFailure = { 
+      if $0 == 0 && $1 == 99 { return 100 }
+      if $0 == 99 && $1 == 0 { return -1}
+      return $0 + $1
+    }
+    
+    checkProperty(ints, commutativeFailure, .commutative)
+  }
+
   func checkReflexive<T1>(
     _ value: T1,
     _ op: (T1, T1) -> Bool) {
