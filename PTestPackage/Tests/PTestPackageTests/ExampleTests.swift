@@ -34,23 +34,7 @@ final class ExampleTests: XCTestCase {
   }
   
   
-  func allPairs<T: Equatable>(
-    _ values: [T], 
-    _ closure: (T,T) -> Void
-  ) {
-    for a in values {
-      for b in values {
-        closure(a, b)
-      }
-    }
-  }
   
-  func checkCommutative<T: Equatable>(_ values: [T], file: StaticString = #file, line : UInt = #line, _ op: (T, T) -> T) {
-    
-    allPairs(values) { (a,b) in
-      checkCommutative(a, b, file:file, line: line, op)
-    }
-  }
   
 
   func testCommutativePlusSucceeds() {
@@ -64,8 +48,26 @@ final class ExampleTests: XCTestCase {
   
   let ints = [-4, -1, 0, 1, 99]
   
-  func testParameterizedCommutative() {
+  func testCombinatorialCommutativeSucceeds() {
     checkCommutative(ints, +)
+  }
+  
+  func testCombinatorialCommutativeDetectsFailure() {
+    XCTExpectFailure("commutative -: two bad values")
+    checkCommutative(ints) { 
+      if $0 == 0 && $1 == 99 { return 100 }
+      if $0 == 99 && $1 == 0 { return -1}
+      return $0 + $1
+    }
+  }
+  
+  func testCheckPropertySucceeds() {
+    checkProperty(3,4,+,.commutative)
+  }
+  
+  func testCheckPropertyFails() {
+    XCTExpectFailure("commutative -")
+    checkProperty(3,4,-,.commutative)
   }
   
   func checkReflexive<T1>(
