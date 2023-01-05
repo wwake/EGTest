@@ -65,6 +65,16 @@ public enum BinaryProperty<T: Equatable> {
   }
 }
 
+public enum BinaryPredicate<T> {
+  case symmetric
+  
+  func fn() -> (T, T, (T,T) -> Bool) -> Bool {
+    switch self {
+    case .symmetric: return {a, b, op in op(a,b) == op(b,a)}
+    }
+  }
+}
+
 
 public extension XCTestCase {
   func allPairs<T: Equatable>(
@@ -83,12 +93,19 @@ public extension XCTestCase {
     
     XCTAssertEqual(op(a,b), op(b,a), "property '\(property)' does not hold for \(a) and \(b)", file: file, line: line)
   }
-    
+  
   func checkProperty<T: Equatable>(_ values: [T], _ op: @escaping BinaryOp<T>, _ property: BinaryProperty<T>, file: StaticString = #file, line : UInt = #line) 
   {
     allPairs(values) { 
       checkProperty($0, $1, op, property, file:file, line:line)
     }
   }
+  
+  func checkProperty<T>(_ a: T, _ b: T, _ op: @escaping (T,T) -> Bool, _ property: BinaryPredicate<T>, file: StaticString = #file, line : UInt = #line) {
+    if property.fn()(a,b,op) { return }
+    
+    XCTAssertEqual(op(a,b), op(b,a), "property '\(property)' does not hold for \(a) and \(b)", file: file, line: line)
+  }
+  
 }
 

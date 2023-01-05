@@ -70,15 +70,16 @@ final class ExampleTests: XCTestCase {
     checkReflexive(3, ==)
   }
   
-  func checkSymmetric<T>(_ a: T, _ b: T, _ op: (T,T) -> Bool, _ name: String = "") {
-    let result = op(a,b) == op(b,a)
-    if result { return }
-    XCTAssertEqual(op(a,b), op(b,a), "Operator '\(name)' is not symmetric for \(a) and \(b)")
+  func testSymmetricSucceeds() {
+    checkProperty(3,4,==,.symmetric)
   }
   
-  func testSymmetric() {
-    checkSymmetric(3, 4, ==)
+  func testSymmetricFails() {
+    XCTExpectFailure("symmetric <= should fail")
+    checkProperty(3,4,<=,.symmetric)
   }
+  
+  
   
   func checkTransitive<T>(_ a: T, _ b: T, _ c : T, _ op: (T,T) -> Bool, _ name: String = "") {
     if (op(a,b) && op(b,c) && op(a,c)) { return }
@@ -89,14 +90,14 @@ final class ExampleTests: XCTestCase {
     checkTransitive(3, 4, 5, <)
   }
   
-  func checkEquivalenceRelation<T>(_ a: T, _ b: T, _ c: T, _ op: (T,T) -> Bool) {
+  func checkEquivalenceRelation<T>(_ a: T, _ b: T, _ c: T, _ op: @escaping (T,T) -> Bool) {
     checkReflexive(a, op)
     checkReflexive(b, op)
     checkReflexive(c, op)
     
-    checkSymmetric(a, b, op)
-    checkSymmetric(b, c, op)
-    checkSymmetric(a, c, op)
+    checkProperty(a, b, op, .symmetric)
+    checkProperty(b, c, op, .symmetric)
+    checkProperty(a, c, op, .symmetric)
     
     checkTransitive(a, b, c, op)
     checkTransitive(c, b, a, op)
