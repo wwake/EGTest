@@ -68,16 +68,16 @@ public extension XCTestCase {
   }
   
 
-  func checkProperty<T: Equatable>(_ a: T, _ b: T, file: StaticString = #file, line : UInt = #line, _ op: @escaping BinaryOp<T>, _ property: Property<T>) {
+  func checkProperty<T: Equatable>(_ a: T, _ b: T, _ op: @escaping BinaryOp<T>, _ property: BinaryProperty<T>, file: StaticString = #file, line : UInt = #line) {
     if property.fn()(a,b,op) { return }
 
     XCTAssertEqual(op(a,b), op(b,a), "property '\(property)' does not hold for \(a) and \(b)", file: file, line: line)
   }
   
-  func checkCommutative<T: Equatable>(_ values: [T], file: StaticString = #file, line : UInt = #line, _ op: @escaping (T, T) -> T) 
+  func checkCommutative<T: Equatable>(_ values: [T], _ op: @escaping (T, T) -> T, file: StaticString = #file, line : UInt = #line) 
   {
     allPairs(values) { 
-      checkProperty($0, $1, op, .commutative)
+      checkProperty($0, $1, op, .commutative, file:file, line:line)
     }
   }
 
@@ -88,7 +88,7 @@ func commutes<T: Equatable>(_ a : T, _ b: T, _ op: BinaryOp<T>) -> Bool {
 }
 
 
-public enum Property<T: Equatable> {
+public enum BinaryProperty<T: Equatable> {
   case commutative
   
   func fn() -> (T, T, BinaryOp<T>) -> Bool {
