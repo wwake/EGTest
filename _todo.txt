@@ -1,5 +1,6 @@
 * Make AllPairs versions of all laws
 * Test-drive real versions of this
+* CheckProperty for various properties
 * Figure out best argument order
 * Keep eq() ?
 
