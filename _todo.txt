@@ -1,7 +1,7 @@
-* Clean up parameterized tests package
 * Make AllPairs versions of all laws
 * Test-drive real versions of this
 * Figure out best argument order
+* Keep eq() ?
 
 
 Week of Jan 2, 2023
@@ -25,3 +25,6 @@ CheckCommutative
 Combinatorial tests
 Symmetric Law
 Equivalence Partition
+
+* Clean up parameterized tests package
+

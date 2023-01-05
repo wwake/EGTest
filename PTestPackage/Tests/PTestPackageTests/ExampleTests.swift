@@ -33,11 +33,6 @@ final class ExampleTests: XCTestCase {
     check(empty) { _ in XCTFail("any test fails") }
   }
   
-  func checkCommutative<T: Equatable>(_ op: (T, T) -> T, _ a: T, _ b: T, _ file: StaticString = #file, _ line : UInt = #line) {
-    if (op(a,b) == op(b,a)) { return }
-    
-    XCTAssertEqual(op(a,b), op(b,a), "operation does not commute for \(a) and \(b)", file: file, line: line)
-  }
   
   func allPairs<T: Equatable>(
     _ values: [T], 
@@ -50,25 +45,27 @@ final class ExampleTests: XCTestCase {
     }
   }
   
-  func checkCommutative<T: Equatable>(_ op: (T, T) -> T, _ values: [T], _ file: StaticString = #file, _ line : UInt = #line) {
+  func checkCommutative<T: Equatable>(_ values: [T], file: StaticString = #file, line : UInt = #line, _ op: (T, T) -> T) {
     
     allPairs(values) { (a,b) in
-      checkCommutative(op, a, b, file, line)
+      checkCommutative(a, b, file:file, line: line, op)
     }
   }
   
 
-  func testCommutativePlus() {
-    let a = 3
-    let b = 4
-    
-    checkCommutative(+, a, b)
+  func testCommutativePlusSucceeds() {
+    checkCommutative(3, 4, +)
+  }
+  
+  func testCommutativeMinusFails() {
+    XCTExpectFailure("commutative -")
+    checkCommutative(3, 4, -)
   }
   
   let ints = [-4, -1, 0, 1, 99]
   
   func testParameterizedCommutative() {
-    checkCommutative(+, ints)
+    checkCommutative(ints, +)
   }
   
   func checkReflexive<T1>(

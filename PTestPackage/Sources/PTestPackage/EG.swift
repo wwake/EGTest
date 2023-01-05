@@ -45,11 +45,19 @@ extension XCTestCase {
   }
 }
 
-
 extension XCTestCase {  
   func eq<T: Equatable>(_ a: T, _ b: T, _ message : String = "", _ file : StaticString = #file, _ line: UInt = #line) -> Bool {
     if a == b { return true }
     XCTAssertEqual(a, b, message, file: file, line: line)
     return false
+  }
+}
+
+extension XCTestCase {
+  func checkCommutative<T: Equatable>(_ a: T, _ b: T, file: StaticString = #file, line : UInt = #line, _ op: (T, T) -> T) 
+  {
+    if (op(a,b) == op(b,a)) { return }
+    
+    XCTAssertEqual(op(a,b), op(b,a), "operation does not commute for \(a) and \(b)", file: file, line: line)
   }
 }
