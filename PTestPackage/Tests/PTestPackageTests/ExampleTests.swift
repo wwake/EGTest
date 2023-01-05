@@ -46,7 +46,7 @@ final class ExampleTests: XCTestCase {
   let ints = [-4, -1, 0, 1, 99]
   
   func testCombinatorialCommutativeSucceeds() {
-    checkProperty(ints, +, .commutative)
+    checkProperty(.commutative, +, ints)
   }
   
   func testCombinatorialCommutativeDetectsFailure() {
@@ -57,47 +57,47 @@ final class ExampleTests: XCTestCase {
       return $0 + $1
     }
     
-    checkProperty(ints, commutativeFailure, .commutative)
+    checkProperty(.commutative, commutativeFailure, ints)
   }
   
   func testReflexiveSucceeds() {
-    checkProperty(3, ==, .reflexive)
+    checkProperty(.reflexive, ==, 3)
   }
   
   func testReflexiveFails() {
     XCTExpectFailure("reflexive > should fail")
-    checkProperty(3, >, .reflexive)
+    checkProperty(.reflexive, >, 3)
   }
   
   func testSymmetricSucceeds() {
-    checkProperty(3,4,==,.symmetric)
+    checkProperty(.symmetric,==,3,4)
   }
   
   func testSymmetricFails() {
     XCTExpectFailure("symmetric <= should fail")
-    checkProperty(3,4,<=,.symmetric)
+    checkProperty(.symmetric, <=, 3,4)
   }
     
   func testTransitiveSucceeds() {
-    checkProperty(3,4,5,<, .transitive)
+    checkProperty(.transitive, <, 3,4,5)
   }
   
   func testTransitiveFails() {
     XCTExpectFailure("transitive != should fail")
-    checkProperty(3, 4, 3, !=, .transitive)
+    checkProperty(.transitive, !=, 3, 4, 3)
   }
   
   func checkEquivalenceRelation<T>(_ a: T, _ b: T, _ c: T, _ op: @escaping (T,T) -> Bool) {
-    checkProperty(a, op, .reflexive)
-    checkProperty(b, op, .reflexive)
-    checkProperty(c, op, .reflexive)
+    checkProperty(.reflexive, op, a)
+    checkProperty(.reflexive, op, b)
+    checkProperty(.reflexive, op, c)
     
-    checkProperty(a, b, op, .symmetric)
-    checkProperty(b, c, op, .symmetric)
-    checkProperty(a, c, op, .symmetric)
+    checkProperty(.symmetric, op, a, b)
+    checkProperty(.symmetric, op, b, c)
+    checkProperty(.symmetric, op, a, c)
     
-    checkProperty(a, b, c, op, .transitive)
-    checkProperty(c, b, a, op, .transitive)
+    checkProperty(.transitive, op, a, b, c)
+    checkProperty(.transitive, op, c, b, a)
   }
   
   func testEquivalenceRelation() {

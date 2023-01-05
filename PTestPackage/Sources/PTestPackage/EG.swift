@@ -107,26 +107,26 @@ public extension XCTestCase {
     XCTAssertEqual(op(a,b), op(b,a), "property '\(property)' does not hold for \(a) and \(b)", file: file, line: line)
   }
   
-  func checkProperty<T: Equatable>(_ values: [T], _ op: @escaping BinaryOp<T>, _ property: BinaryProperty<T>, file: StaticString = #file, line : UInt = #line) 
+  func checkProperty<T: Equatable>(_ property: BinaryProperty<T>, _ op: @escaping BinaryOp<T>, _ values: [T], file: StaticString = #file, line : UInt = #line) 
   {
     allPairs(values) { 
       checkProperty(property, op, $0, $1, file:file, line:line)
     }
   }
   
-  func checkProperty<T>(_ a: T, _ b: T, _ op: @escaping (T,T) -> Bool, _ property: BinaryPredicate<T>, file: StaticString = #file, line : UInt = #line) {
+  func checkProperty<T>(_ property: BinaryPredicate<T>, _ op: @escaping (T,T) -> Bool, _ a: T, _ b: T, file: StaticString = #file, line : UInt = #line) {
     if property.fn()(a,b,op) { return }
     
     XCTFail("property '\(property)' does not hold for \(a) and \(b)", file: file, line: line)
   }
   
-  func checkProperty<T>(_ a: T, _ op: @escaping (T,T) -> Bool, _ property: BinaryPredicate<T>, file: StaticString = #file, line : UInt = #line) {
+  func checkProperty<T>(_ property: BinaryPredicate<T>, _ op: @escaping (T,T) -> Bool, _ a: T, file: StaticString = #file, line : UInt = #line) {
     if property.fn()(a,a,op) { return }
     
     XCTFail("property '\(property)' does not hold for \(a) ", file: file, line: line)
   }
 
-  func checkProperty<T>(_ a: T, _ b: T, _ c: T, _ op: @escaping (T,T) -> Bool, _ property: TernaryPredicate<T>, file: StaticString = #file, line : UInt = #line) {
+  func checkProperty<T>(_ property: TernaryPredicate<T>, _ op: @escaping (T,T) -> Bool, _ a: T, _ b: T, _ c: T, file: StaticString = #file, line : UInt = #line) {
     if property.fn()(a,b,c,op) { return }
     
     XCTFail("property '\(property)' does not hold for \(a), \(b), and \(c) ", file: file, line: line)
