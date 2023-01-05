@@ -27,14 +27,15 @@ struct eg<Input, Output> {
   }
 }
 
-struct Check {
-  static func examples<Input, Output>(
+extension XCTestCase {
+  func check<Input, Output>(
     _ tests: [eg<Input, Output>],
     _ parameterizedAssert: (eg<Input, Output>) -> ())
   {
     tests.forEach { parameterizedAssert($0) }
   }
 }
+
 
 extension XCTestCase {  
   func eq<T: Equatable>(_ a: T, _ b: T, _ message : String = "", _ file : StaticString = #file, _ line: UInt = #line) -> Bool {

@@ -16,7 +16,7 @@ class Demo {
 
 final class ExampleTests: XCTestCase {
   func testStringOfSum() {
-    Check.examples(
+    check(
       [
         eg(input: (-1, 1), output: "0", "zero"),
         eg(input: (3, 0), output: "3", "one-digit"),
@@ -28,6 +28,10 @@ final class ExampleTests: XCTestCase {
       }
   }
   
+  func testParameterizedTestWithEmptyList() {
+    let empty: [eg<Int,String>] = []
+    check(empty) { _ in XCTFail("any test fails") }
+  }
   
   func checkCommutative<T: Equatable>(_ op: (T, T) -> T, _ a: T, _ b: T, _ file: StaticString = #file, _ line : UInt = #line) {
     if (op(a,b) == op(b,a)) { return }

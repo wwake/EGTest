@@ -1,13 +1,26 @@
-Symmetric
-Combinatorial tests
-CheckCommutative 
-Clean up and consolidate
-Make Arrange2 like Act and Assert2, evaluating as it goes
-Added eq() to the TestCase extension so we can use it directly
-Added an eq() method to get a better message
-Added #line and #file for better reporting
+* Make AllPairs versions of all laws
+* Test-drive real versions of this
+* Figure out best argument order
 
-Rename EG => eg
 
 Week of Jan 2, 2023
-AAA with type inference
+
+Explore ResultBuilder with our eg class -  but is Example{ eg()  eg()  eg()}.check(code) that much better than check([eg(), eg(), eg()]) { code }  ? Didn't seem so, so we dropped it
+
+Explore a closure-driven form of Arrange-Act-Assert
+Make Arrange2 like Act and Assert2, evaluating as it goes
+Explore AAA resultBuilder; had trouble identifying our types
+Drop the AAA spike
+
+Rename EG => eg (non-standard but I'm seeing if I like it better)
+
+Added an eq() method to get a better message
+Added #line and #file for better reporting - make sure that errors report in the user's code
+Added eq() to the TestCase extension so we can use it directly
+
+Clean up and consolidate
+
+CheckCommutative 
+Combinatorial tests
+Symmetric Law
+Equivalence Partition
