@@ -55,6 +55,21 @@ public extension XCTestCase {
   }
 }
 
+func commutes<T: Equatable>(_ a : T, _ b: T, _ op: BinaryOp<T>) -> Bool {
+  op(a,b) == op(b,a)
+}
+
+public enum BinaryProperty<T: Equatable> {
+  case commutative
+  
+  func fn() -> (T, T, BinaryOp<T>) -> Bool {
+    switch self {
+    case .commutative: return commutes
+    }
+  }
+}
+
+
 public extension XCTestCase {
   func allPairs<T: Equatable>(
     _ values: [T], 
@@ -66,7 +81,6 @@ public extension XCTestCase {
       }
     }
   }
-  
 
   func checkProperty<T: Equatable>(_ a: T, _ b: T, _ op: @escaping BinaryOp<T>, _ property: BinaryProperty<T>, file: StaticString = #file, line : UInt = #line) {
     if property.fn()(a,b,op) { return }
@@ -78,22 +92,6 @@ public extension XCTestCase {
   {
     allPairs(values) { 
       checkProperty($0, $1, op, .commutative, file:file, line:line)
-    }
-  }
-
-}
-
-func commutes<T: Equatable>(_ a : T, _ b: T, _ op: BinaryOp<T>) -> Bool {
-  op(a,b) == op(b,a)
-}
-
-
-public enum BinaryProperty<T: Equatable> {
-  case commutative
-  
-  func fn() -> (T, T, BinaryOp<T>) -> Bool {
-    switch self {
-    case .commutative: return commutes
     }
   }
 }
