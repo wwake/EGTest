@@ -12,13 +12,15 @@ public struct EG<Input, Output> {
   var input: Input
   var output : Output
   var message: String
-  var line: Int
+  var file: StaticString
+  var line: UInt
   
   public init(input: Input, output: Output,
-              _ message: String = "", _ line: Int = #line) {
+              _ message: String = "", _ file: StaticString = #file, _ line: UInt = #line) {
     self.input = input
     self.output = output
     self.message = message
+    self.file = file
     self.line = line
   }
   
@@ -28,20 +30,21 @@ public struct EG<Input, Output> {
 }
 
 public extension XCTestCase {
+  func eg<Input, Output>(
+    input: Input, 
+    output: Output,
+    _ message: String = "", 
+    _ file: StaticString = #file,
+    _ line: UInt = #line) 
+  -> EG<Input, Output> {
+    EG(input: input, output: output, message, file, line)
+  }
+  
   func check<Input, Output>(
     _ tests: [EG<Input, Output>],
     _ parameterizedAssert: (EG<Input, Output>) -> ())
   {
     tests.forEach { parameterizedAssert($0) }
-  }
-  
-  func eg<Input, Output>(
-    input: Input, 
-    output: Output,
-    _ message: String = "", 
-    _ line: Int = #line) 
-  -> EG<Input, Output> {
-    EG(input: input, output: output, message, line)
   }
 }
 
@@ -62,7 +65,7 @@ public extension XCTestCase {
   
   func allTriples<T1, T2, T3>(
     _ t1s: [T1],
-  _ t2s: [T2],
+    _ t2s: [T2],
     _ t3s: [T3]) 
     -> [(T1, T2, T3)]
   {

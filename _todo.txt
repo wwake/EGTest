@@ -1,14 +1,17 @@
-* Check associativity all-pairs
-* Check identity all-pairs
-* Check equivalenceRelation - compound property
-* CheckProperty for various properties
-* Make AllPairs versions of all laws
-* Figure out best argument order
-* Keep eq() ?
+* Packaging up the remaining EG work
+* Rename to EGTest
+* Add License file
+* Release it 
 
 Week of Jan 9, 2023
 * Check associativity
 * Check identity laws
+* Check associativity all-pairs
+* Check identity all-pairs
+
+* Tested our package with bassi, the BASIC interpreter, and found that the algebraic laws just didn't help much
+* Keep eq() ? No.
+* Dropped all the algebraic property checks
 
 
 Week of Jan 2, 2023
