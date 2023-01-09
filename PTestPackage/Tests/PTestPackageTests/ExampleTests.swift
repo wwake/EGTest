@@ -140,4 +140,17 @@ final class ExampleTests: XCTestCase {
     XCTExpectFailure("identity with non identity should fail")
     checkProperty(.identity, +, 1, 3)
   }
+  
+  func testAssociativePairsSucceed() {
+    checkProperty(.associative, +, [0, 1, 9, -2, -17])
+  }
+  
+  func pseudoAdd(_ a: Int, _ b: Int) -> Int {
+    a == b ? a+b : a
+  }
+  
+  func testAssociativePairsFail() {
+    XCTExpectFailure("associative with non-associative operator should fail")
+    checkProperty(.associative, pseudoAdd, [0, 1, 9, -2, -17])
+  }
 }

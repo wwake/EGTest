@@ -119,6 +119,19 @@ public extension XCTestCase {
     }
   }
   
+  func allTriples<T: Equatable>(
+    _ values: [T], 
+    _ closure: (T,T,T) -> Void
+  ) {
+    for a in values {
+      for b in values {
+        for c in values {
+          closure(a, b, c)
+        }
+      }
+    }
+  }
+
   func checkProperty<T: Equatable>(_ property: BinaryProperty<T>, _ op: @escaping BinaryOp<T>, _ a: T, _ b: T, file: StaticString = #file, line : UInt = #line) {
     if property.fn()(a,b,op) { return }
     
@@ -135,6 +148,13 @@ public extension XCTestCase {
   {
     allPairs(values) { 
       checkProperty(property, op, $0, $1, file:file, line:line)
+    }
+  }
+  
+  func checkProperty<T: Equatable>(_ property: TernaryProperty<T>, _ op: @escaping BinaryOp<T>, _ values: [T], file: StaticString = #file, line : UInt = #line) 
+  {
+    allTriples(values) { a,b,c in
+      checkProperty(property, op, a, b, c, file:file, line:line)
     }
   }
   
