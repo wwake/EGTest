@@ -15,7 +15,7 @@ public struct EG<Input, Output> {
   var line: Int
   
   public init(input: Input, output: Output,
-       _ message: String = "", _ line: Int = #line) {
+              _ message: String = "", _ line: Int = #line) {
     self.input = input
     self.output = output
     self.message = message
@@ -42,7 +42,7 @@ public extension XCTestCase {
     output: Output,
     _ message: String = "", 
     _ line: Int = #line) 
-      -> EG<Input, Output> {
+  -> EG<Input, Output> {
     EG(input: input, output: output, message, line)
   }
 }
@@ -61,6 +61,18 @@ public enum BinaryProperty<T: Equatable> {
   func fn() -> (T, T, BinaryOp<T>) -> Bool {
     switch self {
     case .commutative: return {a,b,op in op(a,b) == op(b,a)}
+    }
+  }
+}
+
+public enum TernaryProperty<T: Equatable> {
+  case associative
+  
+  func fn() -> (T, T, T, BinaryOp<T>) -> Bool {
+    switch self {
+    case .associative: return { a, b, c, op in 
+      op(a, op(b,c)) == op(op(a,b), c) 
+    }
     }
   }
 }
@@ -84,7 +96,7 @@ public enum TernaryPredicate<T> {
     switch self {
     case .transitive: return {a, b, c, op in 
       return op(a,b) && op(b,c) ? op(a,c) : true 
-      }
+    }
     }
   }
 }
@@ -107,6 +119,12 @@ public extension XCTestCase {
     XCTAssertEqual(op(a,b), op(b,a), "property '\(property)' does not hold for \(a) and \(b)", file: file, line: line)
   }
   
+  func checkProperty<T: Equatable>(_ property: TernaryProperty<T>, _ op: @escaping BinaryOp<T>, _ a: T, _ b: T, _ c: T, file: StaticString = #file, line : UInt = #line) {
+    if property.fn()(a,b,c,op) { return }
+    
+    XCTFail("property '\(property)' does not hold for \(a), \(b), and \(c)", file: file, line: line)
+  }
+  
   func checkProperty<T: Equatable>(_ property: BinaryProperty<T>, _ op: @escaping BinaryOp<T>, _ values: [T], file: StaticString = #file, line : UInt = #line) 
   {
     allPairs(values) { 
@@ -125,7 +143,7 @@ public extension XCTestCase {
     
     XCTFail("property '\(property)' does not hold for \(a) ", file: file, line: line)
   }
-
+  
   func checkProperty<T>(_ property: TernaryPredicate<T>, _ op: @escaping (T,T) -> Bool, _ a: T, _ b: T, _ c: T, file: StaticString = #file, line : UInt = #line) {
     if property.fn()(a,b,c,op) { return }
     
