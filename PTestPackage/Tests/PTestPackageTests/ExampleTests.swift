@@ -77,7 +77,7 @@ final class ExampleTests: XCTestCase {
     XCTExpectFailure("symmetric <= should fail")
     checkProperty(.symmetric, <=, 3, 4)
   }
-    
+  
   func testTransitiveSucceeds() {
     checkProperty(.transitive, <, 3, 4, 5)
   }
@@ -113,5 +113,22 @@ final class ExampleTests: XCTestCase {
     XCTExpectFailure("associative - should fail")
     checkProperty(.associative, -, 1, 3, 4)
   }
-
+  
+  func testLeftIdentitySucceds() {
+    checkProperty(.leftIdentity, +, 0, 3)
+  }
+  
+  func testLeftIdentityFails() {
+    XCTExpectFailure("left identity with non identity should fail")
+    checkProperty(.leftIdentity, +, 1, 3)
+  }
+  
+  func testRightIdentitySucceds() {
+    checkProperty(.rightIdentity, +, 0, 3)
+  }
+  
+  func testRightIdentityFails() {
+    XCTExpectFailure("right identity with non identity should fail")
+    checkProperty(.rightIdentity, +, 1, 3)
+  }
 }

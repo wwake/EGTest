@@ -57,10 +57,14 @@ public extension XCTestCase {
 
 public enum BinaryProperty<T: Equatable> {
   case commutative
+  case leftIdentity
+  case rightIdentity
   
   func fn() -> (T, T, BinaryOp<T>) -> Bool {
     switch self {
     case .commutative: return {a,b,op in op(a,b) == op(b,a)}
+    case .leftIdentity: return {e,x,op in op(e,x) == x}
+    case .rightIdentity: return {e,x,op in op(x, e) == x}
     }
   }
 }
@@ -116,7 +120,7 @@ public extension XCTestCase {
   func checkProperty<T: Equatable>(_ property: BinaryProperty<T>, _ op: @escaping BinaryOp<T>, _ a: T, _ b: T, file: StaticString = #file, line : UInt = #line) {
     if property.fn()(a,b,op) { return }
     
-    XCTAssertEqual(op(a,b), op(b,a), "property '\(property)' does not hold for \(a) and \(b)", file: file, line: line)
+    XCTFail("property '\(property)' does not hold for \(a) and \(b)", file: file, line: line)
   }
   
   func checkProperty<T: Equatable>(_ property: TernaryProperty<T>, _ op: @escaping BinaryOp<T>, _ a: T, _ b: T, _ c: T, file: StaticString = #file, line : UInt = #line) {
