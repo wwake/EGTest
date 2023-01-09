@@ -131,4 +131,13 @@ final class ExampleTests: XCTestCase {
     XCTExpectFailure("right identity with non identity should fail")
     checkProperty(.rightIdentity, +, 1, 3)
   }
+  
+  func testIdentitySucceds() {
+    checkProperty(.identity, +, 0, 3)
+  }
+  
+  func testIdentityFails() {
+    XCTExpectFailure("identity with non identity should fail")
+    checkProperty(.identity, +, 1, 3)
+  }
 }

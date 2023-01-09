@@ -59,12 +59,14 @@ public enum BinaryProperty<T: Equatable> {
   case commutative
   case leftIdentity
   case rightIdentity
+  case identity
   
   func fn() -> (T, T, BinaryOp<T>) -> Bool {
     switch self {
     case .commutative: return {a,b,op in op(a,b) == op(b,a)}
     case .leftIdentity: return {e,x,op in op(e,x) == x}
     case .rightIdentity: return {e,x,op in op(x, e) == x}
+    case .identity: return {e,x,op in op(e,x) == x && op(x,e) == x}
     }
   }
 }
