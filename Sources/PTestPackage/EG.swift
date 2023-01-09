@@ -45,14 +45,6 @@ public extension XCTestCase {
   }
 }
 
-public extension XCTestCase {  
-  func eq<T: Equatable>(_ a: T, _ b: T, _ message : String = "", _ file : StaticString = #file, _ line: UInt = #line) -> Bool {
-    if a == b { return true }
-    XCTAssertEqual(a, b, message, file: file, line: line)
-    return false
-  }
-}
-
 public extension XCTestCase {
   func allPairs<T: Equatable>(
     _ values: [T], 
