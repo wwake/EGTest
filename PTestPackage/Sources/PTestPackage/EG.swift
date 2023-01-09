@@ -138,6 +138,12 @@ public extension XCTestCase {
     XCTFail("property '\(property)' does not hold for \(a) and \(b)", file: file, line: line)
   }
   
+  func checkIdentityProperty<T: Equatable>(_ property: BinaryProperty<T>, _ op: @escaping BinaryOp<T>, _ unit: T, _ values: [T], file: StaticString = #file, line : UInt = #line) {
+    values.forEach {
+      checkProperty(property, op, unit, $0, file: file, line: line)
+    }
+  }
+  
   func checkProperty<T: Equatable>(_ property: TernaryProperty<T>, _ op: @escaping BinaryOp<T>, _ a: T, _ b: T, _ c: T, file: StaticString = #file, line : UInt = #line) {
     if property.fn()(a,b,c,op) { return }
     

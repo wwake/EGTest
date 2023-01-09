@@ -141,7 +141,16 @@ final class ExampleTests: XCTestCase {
     checkProperty(.identity, +, 1, 3)
   }
   
-  func testAssociativePairsSucceed() {
+  func testIdentityPairsSucceeds() {
+    checkIdentityProperty(.identity, +, 0, [-3, -1, 0, 1, 7])
+  }
+  
+  func testIdentityPairsFails() {
+    XCTExpectFailure("identity with non-identity should fail")
+    checkIdentityProperty(.identity, +, 1, [-3, -1, 0, 1, 7])
+  }
+  
+  func testAssociativeTriplesSucceed() {
     checkProperty(.associative, +, [0, 1, 9, -2, -17])
   }
   
@@ -149,7 +158,7 @@ final class ExampleTests: XCTestCase {
     a == b ? a+b : a
   }
   
-  func testAssociativePairsFail() {
+  func testAssociativeTriplesFail() {
     XCTExpectFailure("associative with non-associative operator should fail")
     checkProperty(.associative, pseudoAdd, [0, 1, 9, -2, -17])
   }
