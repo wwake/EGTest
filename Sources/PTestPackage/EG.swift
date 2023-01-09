@@ -46,28 +46,36 @@ public extension XCTestCase {
 }
 
 public extension XCTestCase {
-  func allPairs<T: Equatable>(
-    _ values: [T], 
-    _ closure: (T,T) -> Void
-  ) {
-    for a in values {
-      for b in values {
-        closure(a, b)
+  func allPairs<T1, T2>(
+    _ t1s: [T1],
+    _ t2s: [T2])
+    -> [(T1,T2)]
+  {
+    var result: [(T1,T2)] = []
+    for a in t1s {
+      for b in t2s {
+        result.append((a,b))
       }
     }
+    return result
   }
   
-  func allTriples<T: Equatable>(
-    _ values: [T], 
-    _ closure: (T,T,T) -> Void
-  ) {
-    for a in values {
-      for b in values {
-        for c in values {
-          closure(a, b, c)
+  func allTriples<T1, T2, T3>(
+    _ t1s: [T1],
+  _ t2s: [T2],
+    _ t3s: [T3]) 
+    -> [(T1, T2, T3)]
+  {
+    var result: [(T1,T2,T3)] = []
+
+    for a in t1s {
+      for b in t2s {
+        for c in t3s {
+          result.append((a,b,c))
         }
       }
     }
+    return result
   }
 }
 
