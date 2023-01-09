@@ -1,7 +1,11 @@
+* Check equivalenceRelation - compound property
 * CheckProperty for various properties
 * Make AllPairs versions of all laws
 * Figure out best argument order
 * Keep eq() ?
+
+Week of Jan 9, 2023
+
 
 
 Week of Jan 2, 2023

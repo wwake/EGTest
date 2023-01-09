@@ -75,11 +75,11 @@ final class ExampleTests: XCTestCase {
   
   func testSymmetricFails() {
     XCTExpectFailure("symmetric <= should fail")
-    checkProperty(.symmetric, <=, 3,4)
+    checkProperty(.symmetric, <=, 3, 4)
   }
     
   func testTransitiveSucceeds() {
-    checkProperty(.transitive, <, 3,4,5)
+    checkProperty(.transitive, <, 3, 4, 5)
   }
   
   func testTransitiveFails() {
@@ -104,4 +104,14 @@ final class ExampleTests: XCTestCase {
     let op = { a, b in (a % 3) == (b % 3)}
     checkEquivalenceRelation(3, 6, 9, op)
   }
+  
+  func testAssociativeSucceeds() {
+    checkProperty(.associative, +, 2, 1, 3)
+  }
+  
+  func testAssociativeFails() {
+    XCTExpectFailure("associative - should fail")
+    checkProperty(.associative, -, 1, 3, 4)
+  }
+
 }
