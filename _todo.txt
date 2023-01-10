@@ -1,6 +1,3 @@
-* Packaging up the remaining EG work
-* Add License file
-* Release it 
 
 Week of Jan 9, 2023
 * Check associativity
@@ -13,32 +10,32 @@ Week of Jan 9, 2023
 * Dropped all the algebraic property checks
 
 * Rename to EGTest
+* Packaging up the remaining EG work
+* Add License file
+* Release it 
 
 
 Week of Jan 2, 2023
+* Explore ResultBuilder with our eg class -  but is Example{ eg()  eg()  eg()}.check(code) that much better than check([eg(), eg(), eg()]) { code }  ? Didn't seem so, so we dropped it
 
-Explore ResultBuilder with our eg class -  but is Example{ eg()  eg()  eg()}.check(code) that much better than check([eg(), eg(), eg()]) { code }  ? Didn't seem so, so we dropped it
+* Explore a closure-driven form of Arrange-Act-Assert
+* Make Arrange2 like Act and Assert2, evaluating as it goes
+* Explore AAA resultBuilder; had trouble identifying our types
+* Drop the AAA spike
 
-Explore a closure-driven form of Arrange-Act-Assert
-Make Arrange2 like Act and Assert2, evaluating as it goes
-Explore AAA resultBuilder; had trouble identifying our types
-Drop the AAA spike
+* Rename EG => eg (non-standard but I'm seeing if I like it better)
 
-Rename EG => eg (non-standard but I'm seeing if I like it better)
+* Added an eq() method to get a better message
+* Added #line and #file for better reporting - make sure that errors report in the user's code
+* Added eq() to the TestCase extension so we can use it directly
 
-Added an eq() method to get a better message
-Added #line and #file for better reporting - make sure that errors report in the user's code
-Added eq() to the TestCase extension so we can use it directly
+* Clean up and consolidate
 
-Clean up and consolidate
-
-CheckCommutative 
-Combinatorial tests
-Symmetric Law
-Equivalence Partition
+* CheckCommutative 
+* Combinatorial tests
+* Symmetric Law
+* Equivalence Partition
 
 * Clean up parameterized tests package
 
-* Test-drive real versions of property tests
-
-
+* Test-drive non-spike versions of property tests

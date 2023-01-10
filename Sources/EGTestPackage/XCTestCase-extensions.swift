@@ -23,9 +23,9 @@ public extension XCTestCase {
 public extension XCTestCase {
   func check<Input, Output>(
     _ tests: [EG<Input, Output>],
-    _ parameterizedAssert: (EG<Input, Output>) -> ())
+    _ assertFunction: (EG<Input, Output>) -> ())
   {
-    tests.forEach { parameterizedAssert($0) }
+    tests.forEach { assertFunction($0) }
   }
 }
 
