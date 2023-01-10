@@ -16,16 +16,15 @@ class Demo {
 
 final class ExampleTests: XCTestCase {
   func testStringOfSumAllPass() {
-    check(
-      [
-        eg(input: (-1, 1), output: "0", "zero"),
-        eg(input: (3, 0), output: "3", "one-digit"),
-        eg(input: (-2, 1), output: "-1", "negative")
-      ]) { p in
-        let my = Demo()
-        let actual = my.stringOfSum(p.input.0, p.input.1)
-        XCTAssertEqual(p.output, actual, p.msg())
-      }
+    check([
+      eg(input: (-1, 1), output: "0", "zero"),
+      eg(input: (3, 0), output: "3", "one-digit"),
+      eg(input: (-2, 1), output: "-1", "negative")
+    ]) { example in
+      let my = Demo()
+      let actual = my.stringOfSum(example.input.0, example.input.1)
+      XCTAssertEqual(example.output, actual, example.msg(), file: example.file, line: example.line)
+    }
   }
   
   func testStringOfSumAllFailing() {
