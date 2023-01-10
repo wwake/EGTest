@@ -27,17 +27,17 @@ final class ExampleTests: XCTestCase {
     }
   }
   
-  func testStringOfSumAllFailing() {
+  func testStringOfSumWithFailingTests() {
     XCTExpectFailure("wrong output")
     
-    check(
-      [
-        eg(input: (-1, 1), output: "11", "will be zero")
-      ]) { p in
-        let my = Demo()
-        let actual = my.stringOfSum(p.input.0, p.input.1)
-        XCTAssertEqual(p.output, actual, p.msg())
-      }
+    check([
+      eg(input: (-1, 1), output: "11", "will be zero"),
+      eg(input: (2,3), output: "5", "should pass")
+    ]) { p in
+      let my = Demo()
+      let actual = my.stringOfSum(p.input.0, p.input.1)
+      XCTAssertEqual(p.output, actual, p.msg(), file: p.file, line: p.line)
+    }
   }
   
   func testParameterizedTestWithEmptyList() {
@@ -76,5 +76,3 @@ final class ExampleTests: XCTestCase {
     XCTAssertEqual(result[5].2, 4)
   } 
 }
-
-

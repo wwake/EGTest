@@ -1,5 +1,4 @@
 * Packaging up the remaining EG work
-* Rename to EGTest
 * Add License file
 * Release it 
 
@@ -12,6 +11,8 @@ Week of Jan 9, 2023
 * Tested our package with bassi, the BASIC interpreter, and found that the algebraic laws just didn't help much
 * Keep eq() ? No.
 * Dropped all the algebraic property checks
+
+* Rename to EGTest
 
 
 Week of Jan 2, 2023
