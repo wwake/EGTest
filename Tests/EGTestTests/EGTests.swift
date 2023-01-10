@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import EGTestPackage
+@testable import EGTest
 
 class Demo {
   func stringOfSum(_ a: Int, _ b: Int) -> String {

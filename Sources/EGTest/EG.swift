@@ -9,11 +9,11 @@ import Foundation
 import XCTest
 
 public struct EG<Input, Output> {
-  var input: Input
-  var output : Output
-  var message: String
-  var file: StaticString
-  var line: UInt
+  public var input: Input
+  public var output : Output
+  public var message: String
+  public var file: StaticString
+  public var line: UInt
   
   public init(input: Input, output: Output,
               _ message: String = "", _ file: StaticString = #file, _ line: UInt = #line) {
