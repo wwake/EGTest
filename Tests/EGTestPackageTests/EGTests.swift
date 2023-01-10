@@ -1,5 +1,5 @@
 //
-//  ExampleTests.swift
+//  EGTests.swift
 //  
 //
 //  Created by Bill Wake on 1/2/23.
@@ -33,16 +33,16 @@ final class ExampleTests: XCTestCase {
     check([
       eg(input: (-1, 1), output: "11", "will be zero"),
       eg(input: (2,3), output: "5", "should pass")
-    ]) { p in
+    ]) { example in
       let my = Demo()
-      let actual = my.stringOfSum(p.input.0, p.input.1)
-      XCTAssertEqual(p.output, actual, p.msg(), file: p.file, line: p.line)
+      let actual = my.stringOfSum(example.input.0, example.input.1)
+      XCTAssertEqual(example.output, actual, example.msg(), file: example.file, line: example.line)
     }
   }
   
   func testParameterizedTestWithEmptyList() {
     let empty: [EG<Int,String>] = []
-    check(empty) { _ in XCTFail("any test fails") }
+    check(empty) { _ in XCTFail("no test should run") }
   }
   
   func testAllPairsEmpty() {
