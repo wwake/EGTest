@@ -15,7 +15,7 @@ The message is optional. There are implicit file and line arguments that tie ass
 
 * eg() - lets you create examples with the lower-case name eg. Takes the same arguments as EG().
 
-* check() - list of test cases against an assertion
+* check() - runs a list of test cases against an assertion
 
 ```
 func check<Input, Output>(
