@@ -17,13 +17,13 @@ class Demo {
 final class ExampleTests: XCTestCase {
   func testStringOfSumAllPass() {
     check([
-      eg(input: (-1, 1), output: "0", "zero"),
-      eg(input: (3, 0), output: "3", "one-digit"),
-      eg(input: (-2, 1), output: "-1", "negative")
+      EG((-1, 1), expect: "0", "zero"),
+      eg((3, 0), expect: "3", "one-digit"),
+      eg((-2, 1), expect: "-1", "negative")
     ]) { example in
       let my = Demo()
       let actual = my.stringOfSum(example.input.0, example.input.1)
-      XCTAssertEqual(example.output, actual, example.msg(), file: example.file, line: example.line)
+      XCTAssertEqual(example.expect, actual, example.msg(), file: example.file, line: example.line)
     }
   }
   
@@ -31,12 +31,12 @@ final class ExampleTests: XCTestCase {
     XCTExpectFailure("wrong output")
     
     check([
-      eg(input: (-1, 1), output: "11", "will be zero"),
-      eg(input: (2,3), output: "5", "should pass")
+      eg((-1, 1), expect: "11", "will be zero"),
+      eg((2,3), expect: "5", "should pass")
     ]) { example in
       let my = Demo()
       let actual = my.stringOfSum(example.input.0, example.input.1)
-      XCTAssertEqual(example.output, actual, example.msg(), file: example.file, line: example.line)
+      XCTAssertEqual(example.expect, actual, example.msg(), file: example.file, line: example.line)
     }
   }
   

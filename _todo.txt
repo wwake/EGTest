@@ -1,3 +1,5 @@
+Ideas:
+* Drop input: on EG, rename output: to expect: 
 
 Week of Jan 9, 2023
 * Check associativity

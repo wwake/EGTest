@@ -10,15 +10,20 @@ import XCTest
 
 public struct EG<Input, Output> {
   public var input: Input
-  public var output : Output
+  public var expect : Output
   public var message: String
   public var file: StaticString
   public var line: UInt
   
-  public init(input: Input, output: Output,
-              _ message: String = "", _ file: StaticString = #file, _ line: UInt = #line) {
+  public init(
+    _ input: Input, 
+    expect: Output, 
+    _ message: String = "", 
+    _ file: StaticString = #file, 
+    _ line: UInt = #line) 
+  {
     self.input = input
-    self.output = output
+    self.expect = expect
     self.message = message
     self.file = file
     self.line = line

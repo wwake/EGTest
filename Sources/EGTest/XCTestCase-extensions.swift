@@ -10,13 +10,13 @@ import XCTest
 
 public extension XCTestCase {
   func eg<Input, Output>(
-    input: Input, 
-    output: Output,
+    _ input: Input, 
+    expect: Output,
     _ message: String = "", 
     _ file: StaticString = #file,
     _ line: UInt = #line) 
   -> EG<Input, Output> {
-    EG(input: input, output: output, message, file, line)
+    EG(input, expect: expect, message, file, line)
   }
 }
 
