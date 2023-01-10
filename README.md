@@ -8,15 +8,16 @@ This package is for parameterized testing.
 
 Example:
 ```
-EG(input: "abcd", output: 4, message: "length > 0")
+EG("abcd", expect: 4, "length > 0")
 ```
 
-The input and output types are generic; you can use tuples to work with more than one value.
+The input and expected types are generic; you can use tuples to work with more than one value.
 
 The message is optional. 
 
 There are implicit file and line arguments that tie assertions to the line where the `EG` constructor is called. 
 
+**`msg()`** - provides the message from the EG struct, prefixed by its line number. 
 
 ## XCTestCase Extensions
 **`eg()`** - lets you create examples with the lower-case name eg. Takes the same arguments as the `EG` struct.
@@ -59,13 +60,13 @@ class Demo {
 final class ExampleTests: XCTestCase {
   func testStringOfSumAllPass() {
     check([
-      eg(input: (-1, 1), output: "0", "zero"),
-      eg(input: (3, 0), output: "3", "one-digit"),
-      eg(input: (-2, 1), output: "-1", "negative")
+      EG((-1, 1), expect: "0", "zero"),
+      eg((3, 0), expect: "3", "one-digit"),
+      eg((-2, 1), expect: "-1", "negative")
     ]) { example in
       let my = Demo()
       let actual = my.stringOfSum(example.input.0, example.input.1)
-      XCTAssertEqual(example.output, actual, example.msg(), file: example.file, line: example.line)
+      XCTAssertEqual(example.expect, actual, example.msg(), file: example.file, line: example.line)
     }
   }
 }
