@@ -1,5 +1,5 @@
 Ideas:
-* Drop input: on EG, rename output: to expect: 
+
 
 Week of Jan 9, 2023
 * Check associativity
@@ -16,6 +16,8 @@ Week of Jan 9, 2023
 * Add License file
 * Release it 
 
+* Drop input: on EG, rename output: to expect: 
+* Add .swiftpm to .gitignore; fix file header; remove 'import Foundation' where possible
 
 Week of Jan 2, 2023
 * Explore ResultBuilder with our eg class -  but is Example{ eg()  eg()  eg()}.check(code) that much better than check([eg(), eg(), eg()]) { code }  ? Didn't seem so, so we dropped it

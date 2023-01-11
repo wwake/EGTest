@@ -1,11 +1,10 @@
 //
-//  File.swift
+//  EG.swift
 //  
 //
 //  Created by Bill Wake on 1/2/23.
 //
 
-import Foundation
 import XCTest
 
 public struct EG<Input, Output> {

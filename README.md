@@ -5,19 +5,19 @@ This package is for parameterized testing.
 ## Top-Level Struct
 **`EG`** - ("for example") - a struct to hold inputs and outputs. You typically create an array of `EG`, then pass them to the `check()` method.
 
+EG's fields:
+  __input__: Input (generic) - the input arguments; a tuple for multiple values. Use to compute the actual value for your assertions.
+  __expect__: Output (generic) (label required) - the expected output. Use to compute the expected value for your assertions. 
+  __message__: String - a message you can attach to your assertions. Defaults to an empty string.
+  __file__: StaticString - the file name you would typically include as an argument to your assertions. Defaults to #file, so you usually omit this argument. 
+  __line__: UInt - the line number you would typically include as an argument to your assertions. Defaults to #line, so you usually omit this argument.
 
 Example:
 ```
 EG("abcd", expect: 4, "length > 0")
 ```
 
-The input and expected types are generic; you can use tuples to work with more than one value.
-
-The message is optional. 
-
-There are implicit file and line arguments that tie assertions to the line where the `EG` constructor is called. 
-
-**`msg()`** - provides the message from the EG struct, prefixed by its line number. 
+**`msg()`** - provides the message from the EG struct, prefixed by its line number. You can attach this as the message to your assertions.
 
 ## XCTestCase Extensions
 **`eg()`** - lets you create examples with the lower-case name eg. Takes the same arguments as the `EG` struct.
