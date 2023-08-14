@@ -23,10 +23,22 @@ final class ExampleTests: XCTestCase {
     ]) { example in
       let my = Demo()
       let actual = my.stringOfSum(example.input.0, example.input.1)
-      XCTAssertEqual(example.expect, actual, example.msg(), file: example.file, line: example.line)
+      XCTAssertEqual(actual, example.expect, example.msg(), file: example.file, line: example.line)
     }
   }
   
+  func test_EGAssertEqual() {
+    check([
+      EG((-1, 1), expect: "0", "zero"),
+      eg((3, 0), expect: "3", "one-digit"),
+      eg((-2, 1), expect: "-1", "negative")
+    ]) { example in
+      let my = Demo()
+      let actual = my.stringOfSum(example.input.0, example.input.1)
+      EGAssertEqual(actual, example)
+    }
+  }
+
   func testStringOfSumWithFailingTests() {
     XCTExpectFailure("wrong output")
     

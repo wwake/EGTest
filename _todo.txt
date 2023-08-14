@@ -1,5 +1,6 @@
 
 Ideas:
+* Remove header comments
 
 
 Week of Jan 9, 2023

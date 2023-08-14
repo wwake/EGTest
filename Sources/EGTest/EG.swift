@@ -1,10 +1,3 @@
-//
-//  EG.swift
-//  
-//
-//  Created by Bill Wake on 1/2/23.
-//
-
 import XCTest
 
 public struct EG<Input, Output> {
@@ -31,4 +24,10 @@ public struct EG<Input, Output> {
   public func msg() -> String {
     return "Line \(line): \(message)"
   }
+}
+
+public func EGAssertEqual<T: Equatable, Input>(_ actual: T, _ expected: EG<Input, T>) {
+  XCTAssertEqual(
+    actual, expected.expect, expected.message, file: expected.file, line: expected.line
+  )
 }
