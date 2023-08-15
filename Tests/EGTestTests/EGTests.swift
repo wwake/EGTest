@@ -9,6 +9,9 @@ class Demo {
 
 extension String: Error {}
 
+func iAlwaysThrow() throws -> String { throw "I threw" }
+func iNeverThrow() throws -> String { "a string" }
+
 final class ExampleTests: XCTestCase {
   func testStringOfSumAllPass() {
     check([
@@ -58,25 +61,51 @@ final class ExampleTests: XCTestCase {
     EGAssertThrowsError({ }, eg("ignored", expect: "thrown message"))
   }
 
-  func iAlwaysThrow() throws { throw "I threw" }
-
   func testAssertThrowsSucceeds_WhenErrorIsThrown() throws {
-    EGAssertThrowsError(try self.iAlwaysThrow(), eg("ignored", expect: "unused"))
+    EGAssertThrowsError(try iAlwaysThrow(), eg("ignored", expect: "unused"))
   }
 
   func testAssertThrowsFails_WhenThrownErrorIsntRight() {
     XCTExpectFailure("should report an error")
 
-    EGAssertThrowsError(try self.iAlwaysThrow(), eg("ignored", expect: "somebody threw")) { example, error in
+    EGAssertThrowsError(try iAlwaysThrow(), eg("ignored", expect: "somebody threw")) { example, error in
       let actualMessage: String = error as! String
       EGAssertEqual(actualMessage, example)
     }
   }
   
   func testAssertThrowsSucceeds_WhenThrownAndErrorIsRight() {
-    EGAssertThrowsError(try self.iAlwaysThrow(), eg("ignored", expect: "I threw")) { example, error in
+    EGAssertThrowsError(try iAlwaysThrow(), eg("ignored", expect: "I threw")) { example, error in
       let actualMessage: String = error as! String
       EGAssertEqual(actualMessage, example)
+    }
+  }
+
+  func test_checkWorksWithMethodsThatThrow() throws {
+    try check(
+      EG("ignored", expect: "a string")
+    ) {
+      EGAssertEqual(try iNeverThrow(), $0)
+    }
+  }
+
+  func test_checkReportsIncorrectValuesWithMethodsThatThrow() throws {
+    XCTExpectFailure("should report an error comparing strings")
+
+    try check(
+      EG("ignored", expect: "a wrong string")
+    ) {
+      EGAssertEqual(try iNeverThrow(), $0)
+    }
+  }
+
+  func test_checkReportsErrorThrown() throws {
+    XCTExpectFailure("should report a thrown error")
+
+    try check(
+      EG("ignored", expect: "a wrong string")
+    ) {
+      EGAssertEqual(try iAlwaysThrow(), $0)
     }
   }
 

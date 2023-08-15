@@ -21,6 +21,17 @@ public extension XCTestCase {
   }
 }
 
+extension XCTestCase {
+  func check<Input, Output>(
+    _ tests: EG<Input, Output>...,
+    assertFunction: (EG<Input, Output>) throws -> Void
+  ) throws {
+    try tests.forEach {
+      try assertFunction($0)
+    }
+  }
+}
+
 public extension XCTestCase {
   func allPairs<T1, T2>(
     _ t1s: [T1],
