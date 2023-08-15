@@ -50,7 +50,7 @@ public func EGAssertThrowsError<Ignored, Input, Expected: Equatable>(
 ## XCTestCase Extensions
 **`eg()`** - lets you create `EG` examples with the lower-case name `eg`. Takes the same arguments as the `EG` struct.
 
-**`check()`** - runs a list of test cases against an assertion. With XCT assert functions, pass in the file and line so that your test case is highlighted if the assertion fails. Usually, prefer the variadic form, but you have the array form if you need it. 
+**`check()`** - runs a list of test cases against an assertion. With XCT assert functions, pass in the file and line so that your test case is highlighted if the assertion fails. Usually, prefer the variadic form, but you have the array form if you need it. 
 
 ```
 func check<Input, Output>(
@@ -64,7 +64,7 @@ func check<Input, Output>(
     _ assertFunction: (EG<Input, Output>) -> ()) {...}
 ```
 
-**`check() throws`** - like check(), but allows you to call an assertion that might fail. Usually, prefer the variadic form, but you have the array form if you need it. 
+**`check() throws`** - like check(), but allows you to call an assertion that might fail. Usually, prefer the variadic form, but you have the array form if you need it. 
 
 ```
   func check<Input, Output>(
