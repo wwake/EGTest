@@ -58,6 +58,14 @@ func check<Input, Output>(
     _ assertFunction: (EG<Input, Output>) -> ()) {...}
 ```
 
+**`check() throws`** - like check(), but allows you to call an assertion that might fail.
+
+```
+  func check<Input, Output>(
+    _ tests: EG<Input, Output>...,
+    assertFunction: (EG<Input, Output>) throws -> Void
+  ) throws 
+```
 **`allPairs()`** - Creates a list of pairs of any types.
 ```
   func allPairs<T1, T2>(

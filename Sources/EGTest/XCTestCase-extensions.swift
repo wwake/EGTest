@@ -19,9 +19,9 @@ public extension XCTestCase {
   {
     tests.forEach { assertFunction($0) }
   }
-}
 
-extension XCTestCase {
+
+
   func check<Input, Output>(
     _ tests: EG<Input, Output>...,
     assertFunction: (EG<Input, Output>) throws -> Void
