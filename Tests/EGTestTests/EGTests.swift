@@ -14,6 +14,18 @@ func iNeverThrow() throws -> String { "a string" }
 
 final class ExampleTests: XCTestCase {
   func testStringOfSumAllPass() {
+    check(
+      EG((-1, 1), expect: "0", "zero"),
+      eg((3, 0), expect: "3", "one-digit"),
+      eg((-2, 1), expect: "-1", "negative")
+    ) { example in
+      let my = Demo()
+      let actual = my.stringOfSum(example.input.0, example.input.1)
+      XCTAssertEqual(actual, example.expect, example.msg(), file: example.file, line: example.line)
+    }
+  }
+  
+  func testCheckUsingAnArray_NotRecommended() {
     check([
       EG((-1, 1), expect: "0", "zero"),
       eg((3, 0), expect: "3", "one-digit"),
@@ -24,13 +36,13 @@ final class ExampleTests: XCTestCase {
       XCTAssertEqual(actual, example.expect, example.msg(), file: example.file, line: example.line)
     }
   }
-  
+
   func test_EGAssertEqual() {
-    check([
+    check(
       EG((-1, 1), expect: "0", "zero"),
       eg((3, 0), expect: "3", "one-digit"),
       eg((-2, 1), expect: "-1", "negative")
-    ]) { example in
+    ) { example in
       let my = Demo()
       let actual = my.stringOfSum(example.input.0, example.input.1)
       EGAssertEqual(actual, example)
@@ -40,10 +52,10 @@ final class ExampleTests: XCTestCase {
   func testStringOfSumWithFailingTests() {
     XCTExpectFailure("wrong output")
     
-    check([
+    check(
       eg((-1, 1), expect: "11", "will be zero"),
       eg((2,3), expect: "5", "should pass")
-    ]) { example in
+    ) { example in
       let my = Demo()
       let actual = my.stringOfSum(example.input.0, example.input.1)
       XCTAssertEqual(example.expect, actual, example.msg(), file: example.file, line: example.line)

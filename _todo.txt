@@ -1,7 +1,11 @@
 
 Ideas:
-* Remove header comments
 
+Week of Aug 14, 2023
+* Create EGAssertThrowsError()
+* Update EGTest to take new check() with try
+* Let check() use varargs rather than []
+* Remove header comments
 
 Week of Jan 9, 2023
 * Check associativity

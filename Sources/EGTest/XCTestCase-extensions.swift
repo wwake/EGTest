@@ -14,17 +14,29 @@ public extension XCTestCase {
 
 public extension XCTestCase {
   func check<Input, Output>(
+    _ tests: EG<Input, Output>...,
+    assertFunction: (EG<Input, Output>) -> ())
+  {
+    check(tests, assertFunction)
+  }
+
+  func check<Input, Output>(
     _ tests: [EG<Input, Output>],
     _ assertFunction: (EG<Input, Output>) -> ())
   {
     tests.forEach { assertFunction($0) }
   }
 
-
-
   func check<Input, Output>(
     _ tests: EG<Input, Output>...,
     assertFunction: (EG<Input, Output>) throws -> Void
+  ) throws {
+    try check(tests, assertFunction)
+  }
+
+  func check<Input, Output>(
+    _ tests: [EG<Input, Output>],
+    _ assertFunction: (EG<Input, Output>) throws -> Void
   ) throws {
     try tests.forEach {
       try assertFunction($0)
