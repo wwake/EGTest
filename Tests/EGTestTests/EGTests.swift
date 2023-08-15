@@ -1,10 +1,3 @@
-//
-//  EGTests.swift
-//  
-//
-//  Created by Bill Wake on 1/2/23.
-//
-
 import XCTest
 @testable import EGTest
 
@@ -13,6 +6,8 @@ class Demo {
     return "\(a + b)"
   }
 }
+
+extension String: Error {}
 
 final class ExampleTests: XCTestCase {
   func testStringOfSumAllPass() {
@@ -56,7 +51,35 @@ final class ExampleTests: XCTestCase {
     let empty: [EG<Int,String>] = []
     check(empty) { _ in XCTFail("no test should run") }
   }
+
+  func testAssertThrowsFails_WhenNothingThrown() {
+    XCTExpectFailure("should report an error")
+
+    EGAssertThrowsError({ }, eg("ignored", expect: "thrown message"))
+  }
+
+  func iAlwaysThrow() throws { throw "I threw" }
+
+  func testAssertThrowsSucceeds_WhenErrorIsThrown() throws {
+    EGAssertThrowsError(try self.iAlwaysThrow(), eg("ignored", expect: "unused"))
+  }
+
+  func testAssertThrowsFails_WhenThrownErrorIsntRight() {
+    XCTExpectFailure("should report an error")
+
+    EGAssertThrowsError(try self.iAlwaysThrow(), eg("ignored", expect: "somebody threw")) { example, error in
+      let actualMessage: String = error as! String
+      EGAssertEqual(actualMessage, example)
+    }
+  }
   
+  func testAssertThrowsSucceeds_WhenThrownAndErrorIsRight() {
+    EGAssertThrowsError(try self.iAlwaysThrow(), eg("ignored", expect: "I threw")) { example, error in
+      let actualMessage: String = error as! String
+      EGAssertEqual(actualMessage, example)
+    }
+  }
+
   func testAllPairsEmpty() {
     let result = allPairs(["a", "b", "c"], Array<Int>())
     XCTAssertEqual(result.count, 0)

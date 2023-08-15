@@ -20,7 +20,7 @@ EG("abcd", expect: 4, "length > 0")
 
 **`msg()`** - provides the message from the EG struct, prefixed by its line number. You can use this as the message to your assertions.
 
-## Top-Level Function
+## Top-Level Functions
 **`EGAssertEqual()`** - calls XCTAssertEqual, passing it the expected value, message, file, and line number from the EG instance. If the actual type is not equatable, you'll need to use XCTAssertEqual directly.
 
 ```
@@ -28,6 +28,23 @@ EG("abcd", expect: 4, "length > 0")
       _ actual: T, 
       _ expected: EG<Input, T>
   )
+```
+
+**`EGAssertThrowsError()`** - calls XCTAssertThrowsError, passing it the expression, the message from the example, and an optional function that can compare the example and the error.
+
+```
+public func EGAssertThrowsError<Ignored, Input, Expected: Equatable>(
+  _ expression: @escaping @autoclosure () throws -> Ignored,
+  _ example: EG<Input, Expected>
+)
+```
+and 
+```
+public func EGAssertThrowsError<Ignored, Input, Expected: Equatable>(
+  _ expression: @escaping @autoclosure () throws -> Ignored,
+  _ example: EG<Input, Expected>,
+  _ errorHandler: (EG<Input, Expected>, Error) -> Void
+)
 ```
 
 ## XCTestCase Extensions
@@ -58,7 +75,7 @@ func check<Input, Output>(
       -> [(T1, T2, T3)]
 ```
 
-# Example
+# Examples
 Note that the `XCTAssertEqual` call passes the file and line. To see the difference in reporting, make a test case fail, run it, and compare it to what happens when file and line are omitted. 
 The second example shows the same test using EGAssertEqual.
 
@@ -97,4 +114,15 @@ final class ExampleTests2: XCTestCase {
   }
 }
 
+```
+
+```
+  func iAlwaysThrow() throws { throw "I threw" }
+
+  func testAssertThrowsSucceeds_WhenThrownAndErrorIsRight() {
+    EGAssertThrowsError(try self.iAlwaysThrow(), eg("ignored", expect: "I threw")) { example, error in
+      let actualMessage: String = error as! String
+      EGAssertEqual(actualMessage, example)
+    }
+  }
 ```

@@ -31,3 +31,24 @@ public func EGAssertEqual<T: Equatable, Input>(_ actual: T, _ expected: EG<Input
     actual, expected.expect, expected.message, file: expected.file, line: expected.line
   )
 }
+
+public func EGAssertThrowsError<Ignored, Input, Expected: Equatable>(
+  _ expression: @escaping @autoclosure () throws -> Ignored,
+  _ example: EG<Input, Expected>
+) {
+  XCTAssertThrowsError(try expression(), example.message, file: example.file, line: example.line)
+}
+
+public func EGAssertThrowsError<Ignored, Input, Expected: Equatable>(
+  _ expression: @escaping @autoclosure () throws -> Ignored,
+  _ example: EG<Input, Expected>,
+  _ errorHandler: (EG<Input, Expected>, Error) -> Void
+) {
+  XCTAssertThrowsError(
+    try expression(),
+    example.message,
+    file: example.file,
+    line: example.line,
+    { err in errorHandler(example, err) }
+  )
+}
