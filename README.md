@@ -30,6 +30,16 @@ EG("abcd", expect: 4, "length > 0")
   )
 ```
 
+**`EGAssertEqual()`** - calls XCTAssertEqual, passing it the expected value, accuracy, message, file, and line number from the EG instance. If the actual type is not equatable, you'll need to use XCTAssertEqual directly.
+
+```
+  func EGAssertEqual<T: Equatable, Input>(
+      _ actual: T, 
+      _ expected: EG<Input, T>,
+      accuracy: T
+  ) where T: FloatingPoint
+```
+
 **`EGAssertThrowsError()`** - calls XCTAssertThrowsError, passing it the expression, the message from the example, and an optional function that can compare the example and the error.
 
 ```

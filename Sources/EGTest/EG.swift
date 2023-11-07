@@ -32,6 +32,18 @@ public func EGAssertEqual<T: Equatable, Input>(_ actual: T, _ expected: EG<Input
   )
 }
 
+public func EGAssertEqual<T: Equatable, Input>(_ actual: T, _ expected: EG<Input, T>, accuracy: T)
+where T: FloatingPoint {
+  XCTAssertEqual(
+    actual,
+    expected.expect,
+    accuracy: accuracy,
+    expected.message,
+    file: expected.file,
+    line: expected.line
+  )
+}
+
 public func EGAssertThrowsError<Ignored, Input, Expected: Equatable>(
   _ expression: @escaping @autoclosure () throws -> Ignored,
   _ example: EG<Input, Expected>

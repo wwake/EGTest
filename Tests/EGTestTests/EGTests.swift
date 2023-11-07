@@ -49,6 +49,17 @@ final class ExampleTests: XCTestCase {
     }
   }
 
+  func test_EGAssertEqualWithAccuracy() {
+    let eg = EG(1.0009, expect: 1.0, "with fuzz")
+    EGAssertEqual(eg.input, eg, accuracy: 0.001)
+  }
+
+  func test_EGAssertEqualWithAccuracy_fails() {
+    XCTExpectFailure("out of range")
+    let eg = EG(1.0011, expect: 1.0, "out of range")
+    EGAssertEqual(eg.input, eg, accuracy: 0.001)
+  }
+
   func testStringOfSumWithFailingTests() {
     XCTExpectFailure("wrong output")
     
