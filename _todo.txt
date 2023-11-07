@@ -1,5 +1,6 @@
 
-Ideas:
+Week of Nov 7, 2023
+* Add EGAssertEqual() with accuracy
 
 Week of Aug 14, 2023
 * Create EGAssertThrowsError()
